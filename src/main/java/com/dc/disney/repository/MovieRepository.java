@@ -1,9 +1,9 @@
 package com.dc.disney.repository;
 
-import com.dc.disney.entity.CartoonCharacter;
+import com.dc.disney.entity.MovieOrSerie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CartoonCharacterRepository extends JpaRepository<CartoonCharacter, Long> {
+public interface MovieRepository extends JpaRepository<MovieOrSerie, Long> {
 }

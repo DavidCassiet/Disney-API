@@ -35,8 +35,11 @@ public class UserDto {
         this.password = password;
     }
 
-    public String getFullName(String name, String surname) {
-        String fullname = name + "" + surname;
-        return fullname;
+    public String getFullName() {
+        String fullName = this.name + " " + this.surname;
+        return fullName;
+    }
+    public void setFullName(String fullName) {
+        String fullName1 = fullName;
     }
 }

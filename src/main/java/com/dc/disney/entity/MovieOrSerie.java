@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class MovieOrSerie {
     private String tittle;
     @DateTimeFormat
     private String creationDate;
+    @Min(1)@Max(5)
     private Integer score;
     @ManyToMany(mappedBy = "movieOrSeries")
     private List<CartoonCharacter> cartoonCharacters = new ArrayList<>();
