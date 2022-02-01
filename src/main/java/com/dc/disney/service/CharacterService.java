@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Validated
@@ -23,7 +29,7 @@ public class CharacterService {
 
     public void createCharacter(CharacterDto characterDto) {
         CartoonCharacter character = new CartoonCharacter();
-        characterConverter.convert(characterDto, character);
+        characterConverter.dtoToEntity(characterDto, character);
         characterRepository.save(character);
     }
 
@@ -31,7 +37,7 @@ public class CharacterService {
         characterRepository.findById(idCharacter)
                 .orElseThrow(() -> new EntityNotFoundException("Character not found"));
         CartoonCharacter actualCharacter  = characterRepository.findById(idCharacter).get();
-        characterConverter.convert(characterDto, actualCharacter);
+        characterConverter.dtoToEntity(characterDto, actualCharacter);
         characterRepository.save(actualCharacter);
     }
 
@@ -39,5 +45,39 @@ public class CharacterService {
         characterRepository.findById(idCharacter)
                 .orElseThrow(() -> new EntityNotFoundException("Character not found"));
         characterRepository.deleteById(idCharacter);
+    }
+
+    public CharacterDto getCharacterDetails(Long idCharacter) {
+        characterRepository.findById(idCharacter)
+                .orElseThrow(() -> new EntityNotFoundException("Character not found"));
+        CartoonCharacter actualCharacter  = characterRepository.findById(idCharacter).get();
+        CharacterDto characterDto = new CharacterDto();
+        characterConverter.entityToDto(actualCharacter, characterDto);
+        return characterDto;
+    }
+
+    public List<Map> getAllCharacters(String name, Integer age, Long idMovie) {
+        List<CartoonCharacter> allCharacters = new ArrayList<>();
+        if (Objects.isNull(name) && Objects.isNull(age) && Objects.isNull(idMovie)) {
+            allCharacters = characterRepository.findAll();
+        } else if (Objects.nonNull(name)) {
+            allCharacters = characterRepository.findByName(name);
+        } else if (Objects.nonNull(age)) {
+            allCharacters = characterRepository.findByAge(age);
+        } else if (Objects.nonNull(idMovie)) {
+            allCharacters = characterRepository.findByMovie(idMovie);
+        }
+        List<Map> allCharactersMap = allCharacters.stream()
+                .map(character -> {
+                    CharacterDto characterDto = new CharacterDto();
+                    characterDto.setImage(character.getImage());
+                    characterDto.setName(character.getName());
+
+                    Map characterMap = new HashMap();
+                    characterMap.put("image", characterDto.getImage());
+                    characterMap.put("name", characterDto.getName());
+                    return characterMap;
+                }).collect(Collectors.toList());
+        return allCharactersMap;
     }
 }

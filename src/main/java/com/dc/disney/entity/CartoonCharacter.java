@@ -1,5 +1,7 @@
 package com.dc.disney.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +28,7 @@ public class CartoonCharacter {
     private BigDecimal weight;
     private String story;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private List<MovieOrSerie> movieOrSeries = new ArrayList<>();
+    private List<Movie> movies = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -70,20 +72,21 @@ public class CartoonCharacter {
         this.story = story;
     }
 
-    public List<MovieOrSerie> getMovieOrSeries() {
-        return movieOrSeries;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public List<Movie> getMovies() {
+        return movies;
     }
-    public void setMovieOrSeries(List<MovieOrSerie> movieOrSeries) {
-        this.movieOrSeries = movieOrSeries;
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 
-    private void addMovieOrSerie(MovieOrSerie movieOrSerie) {
-        movieOrSeries.add(movieOrSerie);
-        movieOrSerie.getCartoonCharacters().add(this);
+    public void addMovie(Movie movie) {
+        movies.add(movie);
+        movie.getCartoonCharacters().add(this);
     }
-    private void removeMovieOrSerie(MovieOrSerie movieOrSerie) {
-        movieOrSeries.remove(movieOrSerie);
-        movieOrSerie.getCartoonCharacters().remove(null);
+    public void removeMovie(Movie movie) {
+        movies.remove(movie);
+        movie.getCartoonCharacters().remove(null);
     }
 
     @Override
@@ -95,7 +98,7 @@ public class CartoonCharacter {
                 ", age=" + age +
                 ", weight=" + weight +
                 ", story='" + story + '\'' +
-                ", movieOrSeries=" + movieOrSeries +
+                ", movies=" + movies +
                 '}';
     }
 }

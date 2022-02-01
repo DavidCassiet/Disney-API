@@ -1,6 +1,10 @@
 package com.dc.disney.dto;
 
+import com.dc.disney.entity.Movie;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CharacterDto {
 
@@ -9,6 +13,7 @@ public class CharacterDto {
     private Integer age;
     private BigDecimal weight;
     private String story;
+    private List<Movie> movies = new ArrayList<>();
 
     public String getImage() {
         return image;
@@ -43,5 +48,12 @@ public class CharacterDto {
     }
     public void setStory(String story) {
         this.story = story;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 }
