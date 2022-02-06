@@ -14,7 +14,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idUser;
     @NotBlank
     private String name;
     @NotBlank
@@ -27,11 +27,11 @@ public class User {
     @Size(min = 8, max = 30)
     private String password;
 
-    public Long getId() {
-        return id;
+    public Long getIdUser() {
+        return idUser;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {
@@ -65,7 +65,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "idUser=" + idUser +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
