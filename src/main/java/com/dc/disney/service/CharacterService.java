@@ -48,9 +48,8 @@ public class CharacterService {
     }
 
     public CharacterDto getCharacterDetails(Long idCharacter) {
-        characterRepository.findById(idCharacter)
+        CartoonCharacter actualCharacter  = characterRepository.findById(idCharacter)
                 .orElseThrow(() -> new EntityNotFoundException("Character not found"));
-        CartoonCharacter actualCharacter  = characterRepository.findById(idCharacter).get();
         CharacterDto characterDto = new CharacterDto();
         characterConverter.entityToDto(actualCharacter, characterDto);
         return characterDto;
@@ -61,7 +60,7 @@ public class CharacterService {
         if (Objects.isNull(name) && Objects.isNull(age) && Objects.isNull(idMovie)) {
             allCharacters = characterRepository.findAll();
         } else if (Objects.nonNull(name)) {
-            allCharacters = characterRepository.findByName(name);
+            allCharacters = characterRepository.findByCharacterName(name);
         } else if (Objects.nonNull(age)) {
             allCharacters = characterRepository.findByAge(age);
         } else if (Objects.nonNull(idMovie)) {

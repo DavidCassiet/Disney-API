@@ -29,26 +29,26 @@ public class CharacterController {
     @PostMapping
     public ResponseEntity<?> crateCharacter(@RequestBody @Valid CharacterDto characterDto) {
         characterService.createCharacter(characterDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("Successfully created character",HttpStatus.CREATED);
     }
 
     @PutMapping("/{idCharacter}")
     public ResponseEntity<?> editCharacter(@PathVariable("idCharacter") Long idCharacter,
                                            @RequestBody @Valid CharacterDto characterDto) {
         characterService.editCharacter(idCharacter, characterDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully edited character",HttpStatus.OK);
     }
 
     @DeleteMapping("/{idCharacter}")
     public ResponseEntity<?> deleteCharacter(@PathVariable("idCharacter") Long idCharacter) {
         characterService.deleteCharacter(idCharacter);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Successfully deleted character",HttpStatus.ACCEPTED);
     }
 
     @GetMapping
     public ResponseEntity<?> getAllCharacters(@RequestParam(name = "name", required = false) String name,
                                               @RequestParam(name = "age", required = false) Integer age,
-                                              @RequestParam(name = "movies", required = false) Long idMovie) {
+                                              @RequestParam(name = "idMovie", required = false) Long idMovie) {
         return new ResponseEntity<>(characterService.getAllCharacters(name, age, idMovie), HttpStatus.OK);
     }
 

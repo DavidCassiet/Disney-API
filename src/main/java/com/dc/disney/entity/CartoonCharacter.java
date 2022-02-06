@@ -19,7 +19,7 @@ public class CartoonCharacter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idCharacter;
     @NotBlank
     private String image;
     @NotBlank
@@ -30,11 +30,11 @@ public class CartoonCharacter {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<Movie> movies = new ArrayList<>();
 
-    public Long getId() {
-        return id;
+    public Long getIdCharacter() {
+        return idCharacter;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdCharacter(Long idCharacter) {
+        this.idCharacter = idCharacter;
     }
 
     public String getImage() {
@@ -92,7 +92,7 @@ public class CartoonCharacter {
     @Override
     public String toString() {
         return "CartoonCharacter{" +
-                "id=" + id +
+                "idCharacter=" + idCharacter +
                 ", image='" + image + '\'' +
                 ", name='" + name + '\'' +
                 ", age=" + age +

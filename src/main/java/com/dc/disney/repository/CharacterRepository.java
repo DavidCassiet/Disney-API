@@ -11,8 +11,10 @@ import java.util.List;
 @Repository
 public interface CharacterRepository extends JpaRepository<CartoonCharacter, Long> {
 
-    List<CartoonCharacter> findByName(String name);
+    @Query("SELECT character FROM CartoonCharacter character WHERE character.name LIKE %:name%")
+    List<CartoonCharacter> findByCharacterName(@Param("name")String name);
+    CartoonCharacter findByName(String name);
     List<CartoonCharacter> findByAge(Integer age);
-    @Query("SELECT cartoonCharacter FROM CartoonCharacter cartoonCharacter join fetch cartoonCharacter.movies movie WHERE movie.id = id")
-    List<CartoonCharacter> findByMovie(@Param("movies") Long idMovie);
+    @Query("SELECT cartoonCharacter FROM CartoonCharacter cartoonCharacter join fetch cartoonCharacter.movies movie WHERE movie.id = id_movie")
+    List<CartoonCharacter> findByMovie(@Param("id_movie") Long idMovie);
 }
