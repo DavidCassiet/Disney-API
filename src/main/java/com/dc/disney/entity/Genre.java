@@ -1,5 +1,7 @@
 package com.dc.disney.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,19 +16,18 @@ public class Genre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idGenre;
     @NotBlank
     private String name;
-    @NotBlank
     private String image;
     @ManyToMany(mappedBy = "genres")
-    private List<MovieOrSerie> movieOrSeries = new ArrayList<>();
+    private List<Movie> movies = new ArrayList<>();
 
-    public Long getId() {
-        return id;
+    public Long getIdGenre() {
+        return idGenre;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdGenre(Long idGenre) {
+        this.idGenre = idGenre;
     }
 
     public String getName() {
@@ -43,20 +44,21 @@ public class Genre {
         this.image = image;
     }
 
-    public List<MovieOrSerie> getMovieOrSeries() {
-        return movieOrSeries;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public List<Movie> getMovies() {
+        return movies;
     }
-    public void setMovieOrSeries(List<MovieOrSerie> movieOrSeries) {
-        this.movieOrSeries = movieOrSeries;
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 
     @Override
     public String toString() {
         return "Genre{" +
-                "id=" + id +
+                "idGenre=" + idGenre +
                 ", name='" + name + '\'' +
                 ", image='" + image + '\'' +
-                ", movieOrSeries=" + movieOrSeries +
+                ", movies=" + movies +
                 '}';
     }
 }
